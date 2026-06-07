@@ -26,7 +26,7 @@ export const applyJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ message: "Job not found", success: false });
     }
-    // create a new application
+    // creatinf new appilcation and pushing the application id to the job document
 
     const newApplication = await Application.create({
       job: jobId,

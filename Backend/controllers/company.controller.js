@@ -8,11 +8,12 @@ export const registerCompany = async (req, res) => {
     const { companyName } = req.body;
     if (!companyName) {
       return res.status(401).json({
-        message: "Company name is required",
+        message: "",
         success: false,
       });
     }
-    let company = await Company.findOne({ name: companyName });
+    
+    
     if (company) {
       return res.status(401).json({
         message: "Company already exists",
