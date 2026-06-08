@@ -14,54 +14,49 @@ dotenv.config();
 
 const app = express();
 
-// ✅ middleware
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ✅ CORS (important fix)
-// app.use(cors({
-//   origin: "https://your-frontend-url.onrender.com",
-//   credentials: true
-// }));
-app.use(cors({
-  origin: [
-    "https://nexthire-jobportal-2-8hfc.onrender.com",
-   
-  ],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://nexthire-jobportal-2-8hfc.onrender.com",
+    ],
+    credentials: true,
+  })
+);
 
-// ✅ test route (important)
+// Test route
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
 
-// ✅ API routes
+// API Routes
 app.use("/api/user", userRoute);
 app.use("/api/company", companyRoute);
 app.use("/api/job", jobRoute);
 app.use("/api/application", applicationRoute);
 
-// ----------------- code for deployment -----------------
+// ---------------- Deployment ----------------
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  app.use(express.static('../Frontend/dist')); 
+
+  app.use(express.static(path.join(__dirname, "Frontend", "dist")));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(dirpath, './Frontend/dist', 'index.html'));
-  }); 
-   }
+    res.sendFile(
+      path.join(__dirname, "Frontend", "dist", "index.html")
+    );
+  });
+}
+// --------------------------------------------
 
-
-
-
-
-
-
-
+// Port
 const PORT = process.env.PORT || 5011;
 
-// ✅ DB connect BEFORE server start
+// Connect DB and start server
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
