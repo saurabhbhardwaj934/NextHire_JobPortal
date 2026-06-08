@@ -26,8 +26,7 @@ app.use(cookieParser());
 // }));
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "https://next-hire-job-portal-2wf9.vercel.app",
+    "https://nexthire-jobportal-2-8hfc.onrender.com",
    
   ],
   credentials: true
