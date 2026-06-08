@@ -21,17 +21,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [
-      "https://nexthire-jobportal-2-8hfc.onrender.com",
-    ],
+    origin: true,
     credentials: true,
   })
 );
-
-// Test route
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
-});
 
 // API Routes
 app.use("/api/user", userRoute);
@@ -39,24 +32,22 @@ app.use("/api/company", companyRoute);
 app.use("/api/job", jobRoute);
 app.use("/api/application", applicationRoute);
 
-// ---------------- Deployment ----------------
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
+// ---------------- FRONTEND DEPLOYMENT ----------------
+const __dirname = path.resolve();
 
-  app.use(express.static(path.join(__dirname, "Frontend", "dist")));
+app.use(express.static(path.join(__dirname, "Frontend", "dist")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "Frontend", "dist", "index.html")
-    );
-  });
-}
-// --------------------------------------------
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "Frontend", "dist", "index.html")
+  );
+});
+// ----------------------------------------------------
 
 // Port
 const PORT = process.env.PORT || 5011;
 
-// Connect DB and start server
+// Connect DB and Start Server
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
