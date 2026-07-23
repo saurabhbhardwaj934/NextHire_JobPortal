@@ -1,11 +1,11 @@
 export const USER_API_ENDPOINT =
-  "http://localhost:5000/api/user";
+  "https://nexthire-jobportal-cvdi.onrender.com/api/user";
 
 export const JOB_API_ENDPOINT =
-  "http://localhost:5000/api/job";
+  "https://nexthire-jobportal-cvdi.onrender.com/api/job";
 
 export const APPLICATION_API_ENDPOINT =
-  "http://localhost:5000/api/application";
+  "https://nexthire-jobportal-cvdi.onrender.com/api/application";
 
 export const COMPANY_API_ENDPOINT =
-  "http://localhost:5000/api/company";
+  "https://nexthire-jobportal-cvdi.onrender.com/api/company";
