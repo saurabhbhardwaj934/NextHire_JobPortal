@@ -18,9 +18,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://nexthire-jobportal-1-3c1e.onrender.com",
+];
+
 app.use(
   cors({
-    origin: true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -31,7 +43,7 @@ app.use("/api/company", companyRoute);
 app.use("/api/job", jobRoute);
 app.use("/api/application", applicationRoute);
 
-// Health Check Route
+// Health Check
 app.get("/", (req, res) => {
   res.send("NextHire Backend Running Successfully 🚀");
 });
@@ -39,9 +51,13 @@ app.get("/", (req, res) => {
 // Port
 const PORT = process.env.PORT || 5011;
 
-// Connect DB and Start Server
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Start Server
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-});

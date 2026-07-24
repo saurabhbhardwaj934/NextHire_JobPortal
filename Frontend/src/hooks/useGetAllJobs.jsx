@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const API = "https://nexthire-jobportal-1-9bnb.onrender.com/job";
+
 
 const useGetAllJobs = () => {
   const dispatch = useDispatch();
